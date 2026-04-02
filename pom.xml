@@ -8,11 +8,11 @@
 		<version>3.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>StatusObra</artifactId>
+	<groupId>com.gecodem</groupId>
+	<artifactId>TareoObra</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>StatusObra</name>
-	<description>StatusObra</description>
+	<name>TareoObra</name>
+	<description>TareoObra</description>
 	<url/>
 	<licenses>
 		<license/>
