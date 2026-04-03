@@ -1,6 +1,6 @@
-package com.gecodem.tareo.repositories;
+package com.gecodem.tareo.infraestructure.repositories;
 
-import com.gecodem.tareo.persistence.UsuarioEntity;
+import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

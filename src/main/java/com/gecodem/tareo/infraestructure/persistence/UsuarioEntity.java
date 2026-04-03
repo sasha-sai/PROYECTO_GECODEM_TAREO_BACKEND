@@ -1,5 +1,5 @@
-package com.gecodem.tareo.persistence;
-import com.gecodem.tareo.constantes.Tablas;
+package com.gecodem.tareo.infraestructure.persistence;
+import com.gecodem.tareo.utils.constantes.Tablas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -28,6 +28,10 @@ public class UsuarioEntity {
     private String email;
 
     @NotBlank
+    @Size( max = 20)
+    private String celular;
+
+    @NotBlank
     @Size( max = 300)
     private String nombre;
 
@@ -40,6 +44,10 @@ public class UsuarioEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol", nullable = false)
     private RoleEntity role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cargo", nullable = false)
+    private CargoEntity cargo;
 
 }
 

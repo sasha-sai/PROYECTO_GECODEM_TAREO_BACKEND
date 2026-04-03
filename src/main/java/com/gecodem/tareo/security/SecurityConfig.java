@@ -3,7 +3,7 @@ package com.gecodem.tareo.security;
 import com.gecodem.tareo.security.filters.JwtAuthenticationFilter;
 import com.gecodem.tareo.security.filters.JwtAuthorizationFilter;
 import com.gecodem.tareo.security.jwt.JwtUtils;
-import com.gecodem.tareo.service.impl.UserDetailsServiceImpl;
+import com.gecodem.tareo.infraestructure.adapter.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

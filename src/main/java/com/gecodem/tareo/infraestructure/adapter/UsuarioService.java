@@ -1,7 +1,7 @@
-package com.gecodem.tareo.service;
+package com.gecodem.tareo.infraestructure.adapter;
 
 
-import com.gecodem.tareo.persistence.UsuarioEntity;
+import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
 
 import java.util.Optional;
 

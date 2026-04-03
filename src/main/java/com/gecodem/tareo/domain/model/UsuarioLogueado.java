@@ -1,4 +1,4 @@
-package com.gecodem.tareo.model;
+package com.gecodem.tareo.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

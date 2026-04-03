@@ -1,4 +1,4 @@
-package com.gecodem.tareo.constantes;
+package com.gecodem.tareo.utils.constantes;
 
 public class Tablas {
     private Tablas() {}

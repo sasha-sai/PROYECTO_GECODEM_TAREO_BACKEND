@@ -1,8 +1,9 @@
-package com.gecodem.tareo.persistence;
+package com.gecodem.tareo.infraestructure.persistence;
 
 
-import com.gecodem.tareo.constantes.Tablas;
+import com.gecodem.tareo.utils.constantes.Tablas;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,13 +14,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = Tablas.ROL)
-public class RoleEntity {
+@Table(name = Tablas.CARGO)
+public class CargoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rol")
+    @Column(name = "id_cargo")
     private Long id;
 
-    private String rol;
+    @NotBlank
+    private String cargo;
     
 }

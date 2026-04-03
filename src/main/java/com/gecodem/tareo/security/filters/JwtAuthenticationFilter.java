@@ -1,8 +1,8 @@
 package com.gecodem.tareo.security.filters;
 
 
-import com.gecodem.tareo.model.UsuarioLogueado;
-import com.gecodem.tareo.persistence.UsuarioEntity;
+import com.gecodem.tareo.domain.model.UsuarioLogueado;
+import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
 import com.gecodem.tareo.security.jwt.JwtUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;

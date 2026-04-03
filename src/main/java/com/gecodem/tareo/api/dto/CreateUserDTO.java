@@ -1,4 +1,4 @@
-package com.gecodem.tareo.dto;
+package com.gecodem.tareo.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

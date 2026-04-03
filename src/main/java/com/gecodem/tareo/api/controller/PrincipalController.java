@@ -1,9 +1,9 @@
-package com.gecodem.tareo.controller;
+package com.gecodem.tareo.api.controller;
 
-import com.gecodem.tareo.dto.CreateUserDTO;
-import com.gecodem.tareo.persistence.RoleEntity;
-import com.gecodem.tareo.persistence.UsuarioEntity;
-import com.gecodem.tareo.repositories.UsuarioRepository;
+import com.gecodem.tareo.api.dto.CreateUserDTO;
+import com.gecodem.tareo.infraestructure.persistence.RoleEntity;
+import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
+import com.gecodem.tareo.infraestructure.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

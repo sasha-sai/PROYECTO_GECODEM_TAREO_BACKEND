@@ -1,10 +1,10 @@
-package com.gecodem.tareo.service.impl;
+package com.gecodem.tareo.infraestructure.adapter.impl;
 
 
 
-import com.gecodem.tareo.persistence.UsuarioEntity;
-import com.gecodem.tareo.repositories.UsuarioRepository;
-import com.gecodem.tareo.service.UsuarioService;
+import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
+import com.gecodem.tareo.infraestructure.repositories.UsuarioRepository;
+import com.gecodem.tareo.infraestructure.adapter.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
