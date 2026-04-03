@@ -19,14 +19,15 @@ public class PrincipalController {
     private UsuarioRepository userRepository;
 
     @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<UsuarioEntity> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
 
 
         // Construir el usuario con el campo dni
         UsuarioEntity userEntity = UsuarioEntity.builder()
-                .username(createUserDTO.getUsername())
+                .nombre(createUserDTO.getUsername())
                 .dni(createUserDTO.getDni()) // Agregado dni
-                .password(passwordEncoder.encode(createUserDTO.getPassword()))
+                .contrasena(passwordEncoder.encode(createUserDTO.getPassword()))
+                .role(RoleEntity.builder().id(1L).build())
                 .email(createUserDTO.getEmail())
                 .build();
 

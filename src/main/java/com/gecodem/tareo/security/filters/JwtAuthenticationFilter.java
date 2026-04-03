@@ -38,10 +38,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             userEntity = new ObjectMapper().readValue(request.getInputStream(), UsuarioEntity.class);
             email = userEntity.getEmail();
-            password = userEntity.getPassword();
+            password = userEntity.getContrasena();
 
         }catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new

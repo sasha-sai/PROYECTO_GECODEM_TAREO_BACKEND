@@ -10,8 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +19,7 @@ import java.util.Set;
 public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long id;
 
     @Email // esta anotacion es para que si o si el campo se email
@@ -29,14 +28,14 @@ public class UsuarioEntity {
     private String email;
 
     @NotBlank
-    @Size( max = 30)
-    private String username;
+    @Size( max = 300)
+    private String nombre;
 
     @NotBlank
     private String dni;
 
     @NotBlank
-    private String password;
+    private String contrasena;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol", nullable = false)

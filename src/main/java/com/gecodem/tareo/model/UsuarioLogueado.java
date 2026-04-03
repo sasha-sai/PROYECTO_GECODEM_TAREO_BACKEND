@@ -12,8 +12,8 @@ import java.util.Collection;
 public class UsuarioLogueado implements UserDetails {
     private final Long id;
     private final String email;
-    private final String username;
-    private final String password;
+    private final String nombre;
+    private final String contrasena;
     private final String rol;
 
     private final Collection<? extends GrantedAuthority> authorities;
@@ -21,12 +21,12 @@ public class UsuarioLogueado implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username; // Retornar el nombre de usuario, no el correo
+        return nombre; // Retornar el nombre de usuario, no el correo
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return contrasena;
     }
 
     @Override
