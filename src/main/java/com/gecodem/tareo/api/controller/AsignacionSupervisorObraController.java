@@ -20,4 +20,9 @@ public class AsignacionSupervisorObraController {
         return ResponseEntity.ok(service.obtenerAsignacionesDeObra(idSupervisor));
     }
 
+    @GetMapping("/tareo")
+    public ResponseEntity<AsignacionSupervisorObra> obtenerTareoEnAsignacionObra(@RequestParam Long idUsuario) {
+        return ResponseEntity.ok(service.obtenerAsignacionDeObraConTareo(idUsuario));
+    }
+
 }
