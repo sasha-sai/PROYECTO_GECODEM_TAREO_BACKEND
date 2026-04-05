@@ -9,6 +9,7 @@ import com.gecodem.tareo.utils.DateFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,10 +26,12 @@ public class SupervisorObraAdapter implements SupervisorObraPort {
     }
 
     @Override
-    public AsignacionSupervisorObra obtenerDetalleAsignacionObra(Long idAsignacionObra) {
-        return supervisorObraRepository.findById(idAsignacionObra)
-                .map(this::mapEntityToModel)
+    public AsignacionSupervisorObra obtenerDetalleAsignacionObra(Long idUsuario, LocalDate fecha) {
+        SupervisorObraEntity entity = supervisorObraRepository
+                .findByUsuarioIdAndFecha(idUsuario, fecha)
                 .orElseThrow();
+
+        return mapEntityToModel(entity);
     }
 
     private AsignacionSupervisorObra mapEntityToModel(SupervisorObraEntity entity) {
@@ -37,7 +40,7 @@ public class SupervisorObraAdapter implements SupervisorObraPort {
                 .builder()
                 .nombreObra(obraEntity.getObra())
                 .ceco(obraEntity.getCeco())
-                .fechaAsignacion(DateFormatter.dateToString(entity.getFecha()))
+                .fechaAsignacion(DateFormatter.localDateToString(entity.getFecha()))
                 .idAsignacion(entity.getId())
                 .flagCierreDia(entity.getFlgCierreDia())
                 .horarioInicio(DateFormatter.localDateTimeToHourAmPm(obraEntity.getHorarioInicio()))

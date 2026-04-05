@@ -57,9 +57,9 @@ public class TareoObraService {
         return new Response(Respuestas.CODIGO_EXITO, Respuestas.MENSAJE_ELIMINACION_EXITO);
     }
 
-    public TareoDiario obtenerDetalleTareo(Long idObraAsignada) {
-        AsignacionSupervisorObra detalleAsignacion = supervisorObraPort.obtenerDetalleAsignacionObra(idObraAsignada);
-        List<TrabajadorTareoDiario> trabajadores = tareoObraPort.obtenerTrabajadoresDeTareo(idObraAsignada, LocalDate.now());
+    public TareoDiario obtenerDetalleTareo(Long idUsuario) {
+        AsignacionSupervisorObra detalleAsignacion = supervisorObraPort.obtenerDetalleAsignacionObra(idUsuario, LocalDate.now());
+        List<TrabajadorTareoDiario> trabajadores = tareoObraPort.obtenerTrabajadoresDeTareo(detalleAsignacion.getIdAsignacion(), LocalDate.now());
 
         boolean inicioRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraInicioRefrigerio() != null);
         boolean finRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraSalidaRefrigerio() != null);

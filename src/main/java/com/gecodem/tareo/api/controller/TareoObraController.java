@@ -37,8 +37,8 @@ public class TareoObraController {
     }
 
     @GetMapping("/detalle")
-    public ResponseEntity<TareoDiario> obtenerDetalleTareoDiario(@RequestParam Long idObraAsignada) {
-        return ResponseEntity.ok(service.obtenerDetalleTareo(idObraAsignada));
+    public ResponseEntity<TareoDiario> obtenerDetalleTareoDiario(@RequestParam Long idUsuario) {
+        return ResponseEntity.ok(service.obtenerDetalleTareo(idUsuario));
     }
 
     @PostMapping("/ingreso")

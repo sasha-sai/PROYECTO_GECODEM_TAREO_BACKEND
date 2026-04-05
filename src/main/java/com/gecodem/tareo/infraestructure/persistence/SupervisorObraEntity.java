@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Data
@@ -25,7 +25,7 @@ public class SupervisorObraEntity {
 
     @NotNull // para que el campo no estee vacio
     @Size( max = 80)
-    private Date fecha;
+    private LocalDate fecha;
 
     @Column(name = "flg_cierre_dia")
     private Integer flgCierreDia;
