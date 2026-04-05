@@ -1,10 +1,12 @@
 package com.gecodem.tareo.api.controller;
 
+import com.gecodem.tareo.api.dto.BaseId;
 import com.gecodem.tareo.api.dto.GenerarTareo;
 import com.gecodem.tareo.application.TareoObraService;
 import com.gecodem.tareo.domain.model.Response;
 import com.gecodem.tareo.domain.model.TareoDiario;
 import com.gecodem.tareo.domain.model.TrabajadorAsignado;
+import com.gecodem.tareo.domain.model.TrabajadorTareoDiario;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,11 @@ public class TareoObraController {
     @GetMapping("/detalle")
     public ResponseEntity<TareoDiario> obtenerDetalleTareoDiario(@RequestParam Long idObraAsignada) {
         return ResponseEntity.ok(service.obtenerDetalleTareo(idObraAsignada));
+    }
+
+    @PostMapping("/ingreso")
+    public ResponseEntity<TrabajadorTareoDiario> marcarIngresoDeTrabajador(@Valid @RequestBody BaseId id) {
+        return ResponseEntity.ok(service.marcarIngreso(id));
     }
 
 }

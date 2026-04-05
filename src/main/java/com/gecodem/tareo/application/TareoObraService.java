@@ -1,5 +1,6 @@
 package com.gecodem.tareo.application;
 
+import com.gecodem.tareo.api.dto.BaseId;
 import com.gecodem.tareo.api.dto.GenerarTareo;
 import com.gecodem.tareo.domain.model.*;
 import com.gecodem.tareo.domain.port.SupervisorObraPort;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,6 +74,10 @@ public class TareoObraService {
                 .horaFin(detalleAsignacion.getHorarioFin())
                 .trabajadores(trabajadores)
                 .build();
+    }
+
+    public TrabajadorTareoDiario marcarIngreso(BaseId baseId) {
+        return tareoObraPort.marcarIngresoTrabajadorDeTareo(baseId.getId(), LocalDateTime.now());
     }
 
 }

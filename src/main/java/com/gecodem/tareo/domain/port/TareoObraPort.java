@@ -4,6 +4,7 @@ import com.gecodem.tareo.domain.model.TrabajadorAsignado;
 import com.gecodem.tareo.domain.model.TrabajadorTareoDiario;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TareoObraPort {
@@ -17,4 +18,7 @@ public interface TareoObraPort {
     void eliminarUsuarioDelTareo(Long idUsuario);
 
     List<TrabajadorTareoDiario> obtenerTrabajadoresDeTareo(Long idObraAsignada, LocalDate fechaAsignado);
+
+    TrabajadorTareoDiario marcarIngresoTrabajadorDeTareo(Long idTrabajador, LocalDateTime fechaIngreso);
+
 }

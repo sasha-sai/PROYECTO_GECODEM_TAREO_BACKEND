@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -64,6 +65,16 @@ public class TareoObraAdapter implements TareoObraPort {
     public List<TrabajadorTareoDiario> obtenerTrabajadoresDeTareo(Long idObraAsignada, LocalDate fechaAsignado) {
         return tareoObraRepository.findUsuariosConTareo(idObraAsignada, fechaAsignado)
                 .stream().map(this::parseEntityToTrabajadorTareoDiario).toList();
+    }
+
+    @Override
+    public TrabajadorTareoDiario marcarIngresoTrabajadorDeTareo(Long idTrabajador, LocalDateTime fechaIngreso) {
+        TareoObraEntity trabajador = tareoObraRepository.findById(idTrabajador)
+                .orElseThrow();
+
+        trabajador.setFechaInicioDia(fechaIngreso);
+        tareoObraRepository.save(trabajador);
+        return parseEntityToTrabajadorTareoDiario(trabajador);
     }
 
     private TrabajadorAsignado parseEntityToTrabajadorAsignado(TareoObraEntity tareoObraEntity) {
