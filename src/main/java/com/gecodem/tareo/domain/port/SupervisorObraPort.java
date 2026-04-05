@@ -7,4 +7,6 @@ import java.util.List;
 public interface SupervisorObraPort {
 
     List<AsignacionSupervisorObra> obtenerAsignacionObrasPorSupervisor(Long idSupervisor);
+
+    AsignacionSupervisorObra obtenerDetalleAsignacionObra(Long idAsignacionObra);
 }

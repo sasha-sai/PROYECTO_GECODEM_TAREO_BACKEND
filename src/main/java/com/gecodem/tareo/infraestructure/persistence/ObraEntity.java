@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +35,10 @@ public class ObraEntity {
     @NotBlank
     @Size( max = 255)
     private String direccion;
+
+    @Column(name = "horario_inicio")
+    private LocalDateTime horarioInicio;
+
+    @Column(name = "horario_fin")
+    private LocalDateTime horarioFin;
 }

@@ -24,6 +24,13 @@ public class SupervisorObraAdapter implements SupervisorObraPort {
                 .toList();
     }
 
+    @Override
+    public AsignacionSupervisorObra obtenerDetalleAsignacionObra(Long idAsignacionObra) {
+        return supervisorObraRepository.findById(idAsignacionObra)
+                .map(this::mapEntityToModel)
+                .orElseThrow();
+    }
+
     private AsignacionSupervisorObra mapEntityToModel(SupervisorObraEntity entity) {
         ObraEntity  obraEntity = entity.getObra();
         return AsignacionSupervisorObra
@@ -32,6 +39,9 @@ public class SupervisorObraAdapter implements SupervisorObraPort {
                 .ceco(obraEntity.getCeco())
                 .fechaAsignacion(DateFormatter.dateToString(entity.getFecha()))
                 .idAsignacion(entity.getId())
+                .flagCierreDia(entity.getFlgCierreDia())
+                .horarioInicio(DateFormatter.localDateTimeToHourAmPm(obraEntity.getHorarioInicio()))
+                .horarioFin(DateFormatter.localDateTimeToHourAmPm(obraEntity.getHorarioFin()))
                 .ubicacionObra(obraEntity.getDireccion())
                 .build();
     }

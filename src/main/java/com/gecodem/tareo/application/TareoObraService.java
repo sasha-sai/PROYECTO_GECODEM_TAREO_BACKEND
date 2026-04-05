@@ -1,8 +1,8 @@
 package com.gecodem.tareo.application;
 
 import com.gecodem.tareo.api.dto.GenerarTareo;
-import com.gecodem.tareo.domain.model.Response;
-import com.gecodem.tareo.domain.model.TrabajadorAsignado;
+import com.gecodem.tareo.domain.model.*;
+import com.gecodem.tareo.domain.port.SupervisorObraPort;
 import com.gecodem.tareo.domain.port.TareoObraPort;
 import com.gecodem.tareo.utils.constantes.Respuestas;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.Set;
 public class TareoObraService {
 
     private final TareoObraPort tareoObraPort;
+    private final SupervisorObraPort supervisorObraPort;
 
     @Transactional
     public Response guardarTareo(GenerarTareo generarTareo) {
@@ -52,6 +53,25 @@ public class TareoObraService {
     public Response eliminarUsuarioDeTareo(Long idUsuario) {
         tareoObraPort.eliminarUsuarioDelTareo(idUsuario);
         return new Response(Respuestas.CODIGO_EXITO, Respuestas.MENSAJE_ELIMINACION_EXITO);
+    }
+
+    public TareoDiario obtenerDetalleTareo(Long idObraAsignada) {
+        AsignacionSupervisorObra detalleAsignacion = supervisorObraPort.obtenerDetalleAsignacionObra(idObraAsignada);
+        List<TrabajadorTareoDiario> trabajadores = tareoObraPort.obtenerTrabajadoresDeTareo(idObraAsignada, LocalDate.now());
+
+        boolean inicioRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraInicioRefrigerio() != null);
+        boolean finRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraSalidaRefrigerio() != null);
+
+        return TareoDiario.builder()
+                .nombreObra(detalleAsignacion.getNombreObra())
+                .flgInicioRefrigerio(inicioRefrigerio ? 0 : 1)
+                .flgFinRefrigerio(!inicioRefrigerio && !finRefrigerio ? 0 : 1)
+                .flgFinDia(finRefrigerio ? 1 : 0)
+                .flgReabrirDia(detalleAsignacion.getFlagCierreDia())
+                .horaInicio(detalleAsignacion.getHorarioInicio())
+                .horaFin(detalleAsignacion.getHorarioFin())
+                .trabajadores(trabajadores)
+                .build();
     }
 
 }

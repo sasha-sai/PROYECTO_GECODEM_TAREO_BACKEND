@@ -13,5 +13,7 @@ public class AsignacionSupervisorObra {
     private String ceco;
     private String ubicacionObra;
     private String fechaAsignacion;
-
+    private String horarioInicio;
+    private String horarioFin;
+    private Integer flagCierreDia;
 }

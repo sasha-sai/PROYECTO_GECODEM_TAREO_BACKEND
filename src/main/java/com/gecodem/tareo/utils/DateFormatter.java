@@ -4,23 +4,25 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 public class DateFormatter {
+
+    private DateFormatter() {
+    }
+
     private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
     private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+    // 🔥 NUEVO: formato 12h con AM/PM
+    private static final String TIME_AM_PM_PATTERN = "hh:mm a";
 
     // =========================
     // STRING → LOCALDATE
     // =========================
     public static LocalDate stringToLocalDate(String date) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN);
-            return LocalDate.parse(date, formatter);
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException("Error parsing date: " + date, e);
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN);
+        return LocalDate.parse(date, formatter);
     }
 
     // =========================
@@ -35,12 +37,8 @@ public class DateFormatter {
     // STRING → LOCALDATETIME
     // =========================
     public static LocalDateTime stringToLocalDateTime(String dateTime) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN);
-            return LocalDateTime.parse(dateTime, formatter);
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException("Error parsing datetime: " + dateTime, e);
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN);
+        return LocalDateTime.parse(dateTime, formatter);
     }
 
     // =========================
@@ -52,12 +50,33 @@ public class DateFormatter {
     }
 
     // =========================
+    // 🔥 LOCALDATETIME → SOLO HORA (AM/PM)
+    // =========================
+    public static String localDateTimeToHourAmPm(LocalDateTime dateTime) {
+        if (dateTime == null) return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_AM_PM_PATTERN);
+        return dateTime.format(formatter);
+    }
+
+    // =========================
     // DATE → STRING
     // =========================
     public static String dateToString(Date date) {
+        if (date == null) return null;
         return localDateTimeToString(
                 date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         );
+    }
+
+    // =========================
+    // 🔥 DATE → SOLO HORA (AM/PM)
+    // =========================
+    public static String dateToHourAmPm(Date date) {
+        LocalDateTime localDateTime = date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        return localDateTimeToHourAmPm(localDateTime);
     }
 
     // =========================

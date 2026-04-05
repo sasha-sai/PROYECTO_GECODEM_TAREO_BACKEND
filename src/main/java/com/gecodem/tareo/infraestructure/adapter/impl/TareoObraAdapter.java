@@ -1,15 +1,18 @@
 package com.gecodem.tareo.infraestructure.adapter.impl;
 
 import com.gecodem.tareo.domain.model.TrabajadorAsignado;
+import com.gecodem.tareo.domain.model.TrabajadorTareoDiario;
 import com.gecodem.tareo.domain.port.TareoObraPort;
 import com.gecodem.tareo.infraestructure.persistence.SupervisorObraEntity;
 import com.gecodem.tareo.infraestructure.persistence.TareoObraEntity;
 import com.gecodem.tareo.infraestructure.persistence.UsuarioEntity;
 import com.gecodem.tareo.infraestructure.repositories.TareoObraRepository;
+import com.gecodem.tareo.utils.DateFormatter;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class TareoObraAdapter implements TareoObraPort {
     @Override
     public List<TrabajadorAsignado> usuariosEnTareo(Long idObraAsignada, LocalDate fechaAsignado) {
         return tareoObraRepository.findUsuariosConTareo(idObraAsignada, fechaAsignado)
-                .stream().map(this::parseEntityToModel).toList();
+                .stream().map(this::parseEntityToTrabajadorAsignado).toList();
     }
 
     @Override
@@ -57,13 +60,36 @@ public class TareoObraAdapter implements TareoObraPort {
         tareoObraRepository.deleteById(idUsuario);
     }
 
-    private TrabajadorAsignado parseEntityToModel(TareoObraEntity tareoObraEntity) {
+    @Override
+    public List<TrabajadorTareoDiario> obtenerTrabajadoresDeTareo(Long idObraAsignada, LocalDate fechaAsignado) {
+        return tareoObraRepository.findUsuariosConTareo(idObraAsignada, fechaAsignado)
+                .stream().map(this::parseEntityToTrabajadorTareoDiario).toList();
+    }
+
+    private TrabajadorAsignado parseEntityToTrabajadorAsignado(TareoObraEntity tareoObraEntity) {
         UsuarioEntity usuarioEntity = tareoObraEntity.getUsuario();
         return TrabajadorAsignado.builder()
                 .idAsignacion(tareoObraEntity.getId())
                 .idUsuario(usuarioEntity.getId())
                 .cargo(usuarioEntity.getCargo().getCargo())
                 .nombre(usuarioEntity.getNombre())
+                .build();
+    }
+
+    private TrabajadorTareoDiario parseEntityToTrabajadorTareoDiario(TareoObraEntity tareoObraEntity) {
+        UsuarioEntity usuarioEntity = tareoObraEntity.getUsuario();
+        boolean calcularHorasExtras = tareoObraEntity.getFechaInicioHe() != null && tareoObraEntity.getFechaFinHe() != null;
+        return TrabajadorTareoDiario.builder()
+                .idAsignacion(tareoObraEntity.getId())
+                .nombre(usuarioEntity.getNombre())
+                .dni(usuarioEntity.getDni())
+                .horaInicio(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaInicioDia()))
+                .horaSalida(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaFinDia()))
+                .horaInicioRefrigerio(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaInicioReceso()))
+                .horaSalidaRefrigerio(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaFinReceso()))
+                .horaExtraInicioDia(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaInicioHe()))
+                .horaExtraSalidaDia(DateFormatter.localDateTimeToHourAmPm(tareoObraEntity.getFechaFinHe()))
+                .diferenciaHorasExtras(calcularHorasExtras ? Duration.between(tareoObraEntity.getFechaInicioHe(),tareoObraEntity.getFechaFinHe()).toHours(): 0)
                 .build();
     }
 

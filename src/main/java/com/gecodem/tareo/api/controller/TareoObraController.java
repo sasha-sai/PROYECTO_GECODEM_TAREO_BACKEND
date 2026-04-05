@@ -3,6 +3,7 @@ package com.gecodem.tareo.api.controller;
 import com.gecodem.tareo.api.dto.GenerarTareo;
 import com.gecodem.tareo.application.TareoObraService;
 import com.gecodem.tareo.domain.model.Response;
+import com.gecodem.tareo.domain.model.TareoDiario;
 import com.gecodem.tareo.domain.model.TrabajadorAsignado;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,11 @@ public class TareoObraController {
     @DeleteMapping("/eliminar")
     public ResponseEntity<Response> eliminarTrabajadorEnTareo(@RequestParam Long idUsuarioAsignado) {
         return ResponseEntity.ok(service.eliminarUsuarioDeTareo(idUsuarioAsignado));
+    }
+
+    @GetMapping("/detalle")
+    public ResponseEntity<TareoDiario> obtenerDetalleTareoDiario(@RequestParam Long idObraAsignada) {
+        return ResponseEntity.ok(service.obtenerDetalleTareo(idObraAsignada));
     }
 
 }
