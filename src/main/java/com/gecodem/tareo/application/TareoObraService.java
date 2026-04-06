@@ -59,7 +59,7 @@ public class TareoObraService {
 
     public TareoDiario obtenerDetalleTareo(Long idUsuario) {
         AsignacionSupervisorObra detalleAsignacion = supervisorObraPort.obtenerDetalleAsignacionObra(idUsuario, LocalDate.now());
-        List<TrabajadorTareoDiario> trabajadores = tareoObraPort.obtenerTrabajadoresDeTareo(detalleAsignacion.getIdAsignacion(), LocalDate.now());
+        List<TrabajadorTareoDiario> trabajadores = obtenerTrabajadoresTareoDiario(detalleAsignacion.getIdAsignacion());
 
         boolean inicioRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraInicioRefrigerio() != null);
         boolean finRefrigerio = trabajadores.stream().anyMatch(trabajador -> trabajador.getHoraSalidaRefrigerio() != null);
@@ -78,6 +78,24 @@ public class TareoObraService {
 
     public TrabajadorTareoDiario marcarIngreso(BaseId baseId) {
         return tareoObraPort.marcarIngresoTrabajadorDeTareo(baseId.getId(), LocalDateTime.now());
+    }
+
+    @Transactional
+    public EstadoHorarioTareoDiario marcarInicioRefrigerioEnTareo(BaseId baseId) {
+        List<TrabajadorTareoDiario> trabajadores = obtenerTrabajadoresTareoDiario(baseId.getId())
+                .stream().filter(tareo -> tareo.getHoraInicio() != null).toList();
+
+        tareoObraPort.guardarMarcacionInicioRefrigerio(trabajadores, LocalDateTime.now());
+        return EstadoHorarioTareoDiario.builder()
+                .flgInicioRefrigerio(0)
+                .flgFinRefrigerio(1)
+                .flgReabrirDia(0)
+                .flgFinDia(0)
+                .build();
+    }
+
+    private List<TrabajadorTareoDiario> obtenerTrabajadoresTareoDiario(Long idObraAsignada) {
+        return tareoObraPort.obtenerTrabajadoresDeTareo(idObraAsignada, LocalDate.now());
     }
 
 }

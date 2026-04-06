@@ -21,4 +21,5 @@ public interface TareoObraPort {
 
     TrabajadorTareoDiario marcarIngresoTrabajadorDeTareo(Long idTrabajador, LocalDateTime fechaIngreso);
 
+    void guardarMarcacionInicioRefrigerio(List<TrabajadorTareoDiario> trabajadores, LocalDateTime fechaRefrigerio);
 }
