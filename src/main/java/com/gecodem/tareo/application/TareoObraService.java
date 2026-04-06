@@ -85,12 +85,34 @@ public class TareoObraService {
         List<TrabajadorTareoDiario> trabajadores = obtenerTrabajadoresTareoDiario(baseId.getId())
                 .stream().filter(tareo -> tareo.getHoraInicio() != null).toList();
 
+        if(trabajadores.isEmpty()) {
+            throw new RuntimeException(Respuestas.MENSAJE_ERROR_INICIO_RECESO);
+        }
+
         tareoObraPort.guardarMarcacionInicioRefrigerio(trabajadores, LocalDateTime.now());
         return EstadoHorarioTareoDiario.builder()
                 .flgInicioRefrigerio(0)
                 .flgFinRefrigerio(1)
                 .flgReabrirDia(0)
                 .flgFinDia(0)
+                .build();
+    }
+
+    @Transactional
+    public EstadoHorarioTareoDiario marcarFinRefrigerioEnTareo(BaseId baseId) {
+        List<TrabajadorTareoDiario> trabajadores = obtenerTrabajadoresTareoDiario(baseId.getId())
+                .stream().filter(tareo -> tareo.getHoraInicioRefrigerio() != null).toList();
+
+        if(trabajadores.isEmpty()) {
+            throw new RuntimeException(Respuestas.MENSAJE_ERROR_FIN_RECESO);
+        }
+
+        tareoObraPort.guardarMarcacionFinRefrigerio(trabajadores, LocalDateTime.now());
+        return EstadoHorarioTareoDiario.builder()
+                .flgInicioRefrigerio(0)
+                .flgFinRefrigerio(0)
+                .flgReabrirDia(0)
+                .flgFinDia(1)
                 .build();
     }
 

@@ -48,4 +48,9 @@ public class TareoObraController {
         return ResponseEntity.ok(service.marcarInicioRefrigerioEnTareo(id));
     }
 
+    @PostMapping("/fin_refrigerio")
+    public ResponseEntity<EstadoHorarioTareoDiario> marcarFinRefrigerio(@Valid @RequestBody BaseId id) {
+        return ResponseEntity.ok(service.marcarFinRefrigerioEnTareo(id));
+    }
+
 }

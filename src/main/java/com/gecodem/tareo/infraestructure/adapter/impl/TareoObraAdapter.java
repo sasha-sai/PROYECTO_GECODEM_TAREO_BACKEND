@@ -91,6 +91,20 @@ public class TareoObraAdapter implements TareoObraPort {
 
     }
 
+    @Override
+    public void guardarMarcacionFinRefrigerio(List<TrabajadorTareoDiario> trabajadores, LocalDateTime fechaRefrigerio) {
+        List<TareoObraEntity> asignaciones = trabajadores.stream()
+                .map(trabajador -> {
+                    TareoObraEntity tareoEntity = entityManager.getReference(TareoObraEntity.class, trabajador.getIdAsignacion());
+                    tareoEntity.setFechaFinReceso(fechaRefrigerio);
+                    return tareoEntity;
+                })
+                .toList();
+
+        tareoObraRepository.saveAll(asignaciones);
+
+    }
+
     private TrabajadorAsignado parseEntityToTrabajadorAsignado(TareoObraEntity tareoObraEntity) {
         UsuarioEntity usuarioEntity = tareoObraEntity.getUsuario();
         return TrabajadorAsignado.builder()

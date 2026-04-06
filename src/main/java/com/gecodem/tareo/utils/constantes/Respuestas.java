@@ -10,4 +10,6 @@ public class Respuestas {
     public static final String MENSAJE_GUARDAR_EXITO = "Se ha guardado los cambios";
     public static final String MENSAJE_GUARDAR_ERROR = "No se ha podido guardar los cambios";
     public static final String MENSAJE_USUARIO_REPETIDO = "No se puede repetir el mismo usuario";
+    public static final String MENSAJE_ERROR_INICIO_RECESO = "No se ha registrado el ingreso laboral de algún trabajador";
+    public static final String MENSAJE_ERROR_FIN_RECESO = "No ha registrado el inicio del refrigerio";
 }
